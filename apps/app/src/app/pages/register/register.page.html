@@ -1,0 +1,37 @@
+<!-- register.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">Username</ion-label>
+    <ion-input type="text" [(ngModel)]="registerData.username"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Email</ion-label>
+    <ion-input type="email" [(ngModel)]="registerData.email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Password</ion-label>
+    <ion-input type="password" [(ngModel)]="registerData.password"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Phone Number</ion-label>
+    <ion-input type="tel" [(ngModel)]="registerData.phoneNumber"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-checkbox [(ngModel)]="registerData.agreeTerms"></ion-checkbox>
+    <ion-label>I agree to the terms and conditions</ion-label>
+  </ion-item>
+
+  <ion-button expand="block" (click)="register()" [disabled]="!registerData.agreeTerms">Register</ion-button>
+
+  <ion-button expand="block" color="medium" (click)="navigateToLogin()">Already have an account?</ion-button>
+</ion-content>

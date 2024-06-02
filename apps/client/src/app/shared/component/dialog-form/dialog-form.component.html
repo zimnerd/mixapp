@@ -1,0 +1,90 @@
+<!-- <mat-form-field>
+    <mat-label>Input</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Select</mat-label>
+    <mat-select>
+      <mat-option value="one">First option</mat-option>
+      <mat-option value="two">Second option</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Textarea</mat-label>
+    <textarea matInput></textarea>
+  </mat-form-field>
+   -->
+
+<mat-card [formGroup]="form">
+  <mat-card-header>
+    <mat-card-title>{{ data.title }}</mat-card-title>
+    <mat-card-subtitle *ngIf="data.subtitle">{{
+      data.subtitle
+    }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content *ngIf="formFields.length">
+    <ng-container *ngFor="let field of formFields">
+      <mat-form-field class="full-width">
+        <mat-label>{{ field.label }}</mat-label>
+        <input
+          matInput
+          [formControlName]="field.name"
+          [type]="field.type"
+          *ngIf="field.type === 'text' || field.type === 'number'"
+        />
+        <ng-container *ngIf="field.type === 'select'">
+          <mat-select [formControlName]="field.name">
+            <mat-option
+              *ngFor="let option of getOptions(field)"
+              [value]="option.key"
+            >
+              {{ option.value }}
+            </mat-option>
+          </mat-select>
+        </ng-container>
+        <textarea
+          matInput
+          [formControlName]="field.name"
+          *ngIf="field.type === 'textarea'"
+        ></textarea>
+        <ng-container *ngIf="field.type === 'date'">
+          <input
+            matInput
+            [formControlName]="field.name"
+            [matDatepicker]="picker"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </ng-container>
+
+        <mat-error *ngIf="form.get(field.name)?.hasError('required')">
+          {{ field.label }} is required
+        </mat-error>
+        <!-- other error types, max, min, regex -->
+        <mat-error *ngIf="form.get(field.name)?.hasError('max')">
+          {{ field.label }} cannot be more than {{ field.max }}
+        </mat-error>
+        <mat-error *ngIf="form.get(field.name)?.hasError('min')">
+          {{ field.label }} cannot be less than {{ field.min }}
+        </mat-error>
+        <mat-error *ngIf="form.get(field.name)?.hasError('pattern')">
+          {{ field.label }} is invalid
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+  </mat-card-content>
+  <mat-card-actions class="space-between">
+    <ng-container>
+    
+    <button mat-button (click)="close()">
+      {{ data.cancelButtonText || "Cancel" }}
+    </button>
+    <button mat-button (click)="submit()">
+      {{ data.submitButtonText || "Submit" }}
+    </button>
+</ng-container>
+  </mat-card-actions>
+</mat-card>

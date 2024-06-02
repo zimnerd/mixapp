@@ -1,0 +1,31 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="side" [opened]="opened | async" class="sidenav">
+      <mat-nav-list>
+        <div class="profile-section">
+          <mat-icon>account_circle</mat-icon>
+          <div class="profile-details">
+            <h4>John Doe</h4>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="settings-section">
+          <h3 matListItemTitle>Settings</h3>
+          <mat-list-item>
+            <mat-icon matListItemIcon>settings</mat-icon>
+            <h4 matListItemTitle>Account Settings</h4>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>logout</mat-icon>
+            <h4 matListItemTitle>Logout</h4>
+          </mat-list-item>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-header></app-header>
+      <!-- Main content goes here -->
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
