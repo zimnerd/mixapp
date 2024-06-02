@@ -4,13 +4,12 @@ import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
 import User from '../models/User';
 import { Twilio } from 'twilio';
+import 'dotenv/config';
 
-const JWT_SECRET = 'your_jwt_secret';
-const twilioClient = new Twilio('AC13a1f819d11cc6389ad6881ae7291801', '0b8bb881c38e4c0b73ae835c60761ab8');
+const JWT_SECRET = process.env.JWT_SECRET;
+const twilioClient = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 const OTP_EXPIRATION_TIME = 10 * 60 * 1000; // 10 minutes
-const twilioPhoneNumber = '+15515538895';
-const twilioAccountSid = 'AC13a1f819d11cc6389ad6881ae7291801';
-const twilioAuthToken = '0b8bb881c38e4c0b73ae835c60761ab8';
+const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 
 // Register a new user (email and password)
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
