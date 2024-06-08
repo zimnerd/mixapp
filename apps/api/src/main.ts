@@ -8,6 +8,7 @@ import connectDB from './config/db';
 import appRouting from './routes/app-routing';
 import cors from 'cors';
 
+
 // Connect to MongoDB
 connectDB().then(() => {
   console.log('MongoDB connected successfully');

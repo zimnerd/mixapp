@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
@@ -155,4 +155,25 @@ export const verifyOtp = async (req: Request, res: Response): Promise<void> => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+};
+
+export interface AuthenticatedRequest extends Request {
+  user?: any;
+}
+
+export const authenticateToken: RequestHandler = (req: Request, res: Response, next: NextFunction): void => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.sendStatus(401);
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.sendStatus(403);
+    }
+    (req as AuthenticatedRequest).user = user; // Type assertion here
+    next();
+  });
 };
